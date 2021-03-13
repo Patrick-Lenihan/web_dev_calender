@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField ,HiddenField
 from wtforms.validators import InputRequired
 
 class CalenderInsertForm(FlaskForm):
@@ -8,3 +8,6 @@ class CalenderInsertForm(FlaskForm):
     eventEnd = StringField("end",validators=[InputRequired(message="you must enter somthing here")]) 
     date = StringField("date",validators=[InputRequired(message="you must enter somthing here")]) 
     submit = SubmitField("Submit")
+
+class HiddenFormForTodaysDate(FlaskForm):
+	todaysDate = HiddenField()# found method from https://wtforms.readthedocs.io/en/2.3.x/fields/ 
