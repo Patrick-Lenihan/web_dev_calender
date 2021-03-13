@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<script src="{{ url_for('static',filename='time.js') }}" type="module"></script>
+<form action="" method="POST" novalidate id="hiddenFormid">
+    {{ hiddenForm.hidden_tag() }}
+    {{ hiddenForm.todaysDate()}}
+</form>
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.eventName.label }}
+    {{ form.eventName() }}
+    <br>
+    {{ form.eventStart.label }}
+    {{ form.eventStart() }}
+    <br>
+    {{ form.eventEnd.label }}
+    {{ form.eventEnd() }}
+    <br>
+    {{ form.date.label }}
+    {{ form.date() }}
+    <br>
+
+    {{ form.submit.label }}
+    {{ form.submit() }}
+</form>
+<table>
+    {% for out in output %}
+    <tr>
+    <td> {{ out['name'] }}</td>
+    <td> {{ out['startTime'] }}</td>
+    <td> {{ out['endTime'] }}</td>
+     <td> {{ out['date'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
