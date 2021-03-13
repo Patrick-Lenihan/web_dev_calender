@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+{% if date_needed == 'True' %}
+<script src="{{ url_for('static',filename='time.js') }}" type="module"></script> 
+{% endif %}
+<form action="" method="POST" novalidate id="hiddenFormid">
+    {{ hiddenForm.hidden_tag() }}
+    {{ hiddenForm.todaysDate()}}
+</form>
+<table>
+    {% for out in output %}
+    <tr>
+    <td> {{ out['name'] }}</td>
+    <td> {{ out['startTime'] }}</td>
+    <td> {{ out['endTime'] }}</td>
+     <td> {{ out['date'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
