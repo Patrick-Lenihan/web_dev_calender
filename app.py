@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from forms import CalenderInsertForm,HiddenFormForTodaysDate
 from database import get_db, close_db
-from functions_for_calender_page import insert_event_into_db, convert_from_string_time_to_int_format, returnDB, convert_javascript_date_to_SQL_format
+from functions_for_calender_page import insert_event_into_db, convert_from_string_time_to_int_format, returnDB, convert_javascript_date_to_SQL_format, returnDBOnDate
 from flask import session
 from flask_session import Session 
 app = Flask(__name__)
@@ -23,9 +23,9 @@ def calender():
         if "client_date" not in session:
             session["client_date"]= convert_javascript_date_to_SQL_format(hiddenForm.todaysDate.data)
             #return the db
-            output = returnDB()
+        output = returnDBOnDate(session['client_date'])
+        #output = returnDB()
         date_needed='False'
-        print(session['client_date'])
         return render_template('calender.html',hiddenForm=hiddenForm, output=output, date_needed=date_needed)
     return render_template('calender.html',hiddenForm=hiddenForm, output=output,date_needed=date_needed)
 
@@ -43,9 +43,6 @@ def insert():
         eventEnd = convert_from_string_time_to_int_format(form.eventEnd.data)
         date = form.date.data
         insert_event_into_db(nameOfEvent,eventStart,eventEnd,date)
-
-        #return the db
-        output = returnDB()
         return render_template('insert.html',form=form)
     
     return render_template('insert.html',form=form)

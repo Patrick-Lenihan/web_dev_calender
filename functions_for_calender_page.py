@@ -1,10 +1,10 @@
 from database import get_db, close_db
-def insert_event_into_db(nameOfEvent,eventStart,eventEnd,date):
+def insert_event_into_db(nameOfEvent,eventStart,eventEnd,eventDate):
     '''
     this is a function that inserts an event into the database 
     '''
     db = get_db()
-    db.execute("""INSERT INTO events (name, startTime, endTime, date) VALUES(?,?,?,?);""",(nameOfEvent,eventStart,eventEnd,date))
+    db.execute("""INSERT INTO events (name, startTime, endTime, eventDate) VALUES(?,?,?,?);""",(nameOfEvent,eventStart,eventEnd,eventDate))
     db.commit()
 
 
@@ -33,3 +33,12 @@ def convert_javascript_date_to_SQL_format(date):
     months = {"Jan":'01', "Feb":'02', "Mar":'03', "Apr":'04', "May":'05', "Jun":'06', "Jul":'07', "Aug":'08', "Sep":'09', "Oct":'10', "Nov":'11', "Dec":'12'}
     date = date.split(" ")
     return date[3]+"-"+months[date[1]]+'-'+date[2]
+
+def returnDBOnDate(eventDate):
+    '''
+    this is a fuction that returns the database for display but only on a specific date
+    in the format YYYY-MM-DD
+    '''
+    print(eventDate)
+    db = get_db()
+    return db.execute("""SELECT * FROM events WHERE eventDate = ?  ORDER BY startTime;""",(eventDate,)).fetchall()

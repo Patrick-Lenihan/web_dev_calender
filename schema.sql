@@ -6,7 +6,7 @@ CREATE TABLE events
     name TEXT NOT NULL,
     startTime INTEGER NOT NULL,
     endTime INTEGER NOT NULL,
-    date TEXT NOT NULL
+    eventDate TEXT NOT NULL
 );
-INSERT INTO events (name, startTime, endTime, date)
+INSERT INTO events (name, startTime, endTime, Eventdate)
 VALUES ('patrick', 36, 36, '2008-11-11');
