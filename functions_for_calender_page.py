@@ -34,6 +34,15 @@ def convert_javascript_date_to_SQL_format(date):
     date = date.split(" ")
     return date[3]+"-"+months[date[1]]+'-'+date[2]
 
+def time_until_client_date_change(date):
+    '''
+    this is a function that records the number of hours away a date is from changing
+    '''
+    date = date.split(" ")
+    client_time = date[4]
+    client_time = client_time.split(":")
+    return 24 - int(client_time[0])
+
 def returnDBOnDate(eventDate):
     '''
     this is a fuction that returns the database for display but only on a specific date

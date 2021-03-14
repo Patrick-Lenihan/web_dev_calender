@@ -1,7 +1,8 @@
 from flask import Flask, render_template
 from forms import CalenderInsertForm,HiddenFormForTodaysDate
 from database import get_db, close_db
-from functions_for_calender_page import insert_event_into_db, convert_from_string_time_to_int_format, returnDB, convert_javascript_date_to_SQL_format, returnDBOnDate
+from functions_for_calender_page import insert_event_into_db, convert_from_string_time_to_int_format, returnDB, convert_javascript_date_to_SQL_format, returnDBOnDate,time_until_client_date_change
+from time import time
 from flask import session
 from flask_session import Session 
 app = Flask(__name__)
@@ -16,12 +17,16 @@ def close_db_at_end_of_request(e=None):
 
 @app.route("/calender", methods=["GET","POST"])
 def calender():
+    unix_time = (int(time()))//60 
     hiddenForm = HiddenFormForTodaysDate()
     output = ""
     date_needed = 'True'
     if hiddenForm.validate_on_submit():
-        if "client_date" not in session:
+        if ("client_date" not in session) or (session['time_until_change'] < (unix_time-session['server_date'])):
+            session["time_until_change"] = time_until_client_date_change(hiddenForm.todaysDate.data)
             session["client_date"]= convert_javascript_date_to_SQL_format(hiddenForm.todaysDate.data)
+            session["server_date"] = unix_time #recording the time in hours since 1 Jan 1970 for 
+            print(session['time_until_change'])
             #return the db
         output = returnDBOnDate(session['client_date'])
         #output = returnDB()
