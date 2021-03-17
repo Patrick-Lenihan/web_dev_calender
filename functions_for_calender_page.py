@@ -43,11 +43,11 @@ def time_until_client_date_change(date):
     client_time = client_time.split(":")
     return 24 - int(client_time[0])
 
-def returnDBOnDate(eventDate):
+def returnDBOnDate(eventDate,offset):
     '''
     this is a fuction that returns the database for display but only on a specific date
     in the format YYYY-MM-DD
     '''
-    print(eventDate)
+    offset_string = "+"+str(offset)+" day"
     db = get_db()
-    return db.execute("""SELECT * FROM events WHERE eventDate = ?  ORDER BY startTime;""",(eventDate,)).fetchall()
+    return db.execute("""SELECT * FROM events WHERE eventDate = date(?,?) ORDER BY startTime;""",(eventDate,offset_string)).fetchall()

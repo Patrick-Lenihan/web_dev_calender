@@ -28,11 +28,11 @@ def calender():
             session["server_date"] = unix_time #recording the time in hours since 1 Jan 1970 for 
             print(session['time_until_change'])
             #return the db
-        output = returnDBOnDate(session['client_date'])
+        output = returnDBOnDate(session['client_date'],0)
         #output = returnDB()
         date_needed='False'
-        return render_template('calender.html',hiddenForm=hiddenForm, output=output, date_needed=date_needed)
-    return render_template('calender.html',hiddenForm=hiddenForm, output=output,date_needed=date_needed)
+        return render_template('calender_test.html',hiddenForm=hiddenForm, output=output, date_needed=date_needed)
+    return render_template('calender_test.html',hiddenForm=hiddenForm, output=output,date_needed=date_needed)
 
 
 @app.route("/insert", methods=["GET","POST"])
