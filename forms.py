@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField ,HiddenField
+from wtforms import StringField, SubmitField ,HiddenField, PasswordField
 from wtforms.validators import InputRequired
 
 class CalenderInsertForm(FlaskForm):
@@ -11,3 +11,15 @@ class CalenderInsertForm(FlaskForm):
 
 class HiddenFormForTodaysDate(FlaskForm):
 	todaysDate = HiddenField()# found method from https://wtforms.readthedocs.io/en/2.3.x/fields/ 
+
+class signUpForm(FlaskForm):
+	name = StringField("name",validators=[InputRequired(message="you must enter somthing here")])
+	username = StringField("user name",validators=[InputRequired(message="you must enter somthing here")])
+	password = PasswordField("password",validators=[InputRequired(message="you must enter somthing here")])
+	confirmPassword = PasswordField("confirm password",validators=[InputRequired(message="you must enter somthing here")])
+	submit = SubmitField("Submit")
+
+class loginForm(FlaskForm):
+	username = StringField("user name",validators=[InputRequired(message="you must enter somthing here")])
+	password = PasswordField("password",validators=[InputRequired(message="you must enter somthing here")])
+	submit = SubmitField("Submit")

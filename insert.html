@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.eventName.label }}
+    {{ form.eventName() }}
+    <br>
+    {{ form.eventStart.label }}
+    {{ form.eventStart() }}
+    <br>
+    {{ form.eventEnd.label }}
+    {{ form.eventEnd() }}
+    <br>
+    {{ form.date.label }}
+    {{ form.date() }}
+    <br>
+
+    {{ form.submit.label }}
+    {{ form.submit() }}
+</form>
+
+{% endblock %}

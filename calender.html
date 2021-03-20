@@ -8,14 +8,53 @@
     {{ hiddenForm.hidden_tag() }}
     {{ hiddenForm.todaysDate()}}
 </form>
-<table>
+<main>
+<div id="times">
+ {% for i in range(0,25) %}
+    <p id="time{{ i }}">{{i}}:00</p>
+ {% endfor %}   
+
+</div>
+<div id="eventContainer">
+    <div>fksjfkasjfksjf</div>
     {% for out in output %}
-    <tr>
-    <td> {{ out['name'] }}</td>
-    <td> {{ out['startTime'] }}</td>
-    <td> {{ out['endTime'] }}</td>
-     <td> {{ out['eventDate'] }}</td>
-    </tr>
+
+     <p id='idof{{ out["id"] }}'>{{ out['name'] }} </p>
     {% endfor %}
-</table>
+</div>
+</main>
+<style>
+
+main{
+    display: flex;
+    flex-direction: row;
+    /*align-items: stretch;*/
+}
+{% for hour in range(0,25) %}
+#time{{ hour }} {
+    /*position: absolute;*/
+    /*margin-top: {{ ((60*hour)/1440)*100 }}%;*/
+    margin-top: calc(((60*{{ hour }} )/1440)*100)%;
+
+}
+{% endfor %}
+/*#eventContainer{
+    {% if not output == '' %}
+    padding-top: {{ (output[0]['startTime']/1440)*(100) }}%; 
+    {% endif %}
+}*/
+div {background-color: green;}
+{% for out in output %}
+#idof{{ out['id'] }} {
+display: block;
+/*position: absolute;*/
+background-color: yellow;
+margin-left: 10%;
+margin-top:{{ (out['startTime']/1440)*(100) }}%; 
+margin-bottom:0px;
+height:{{ ((out['endTime']-out['startTime'])/1440)*(100) }}%;
+}
+    {% endfor %}
+
+</style>
 {% endblock %}

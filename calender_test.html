@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+{% if date_needed == 'True' %}
+<script src="{{ url_for('static',filename='time.js') }}" type="module"></script> 
+{% endif %}
+<form action="" method="POST" novalidate id="hiddenFormid">
+    {{ hiddenForm.hidden_tag() }}
+    {{ hiddenForm.todaysDate()}}
+</form>
+<h1>Hello World!</h1>
+<main>
+<div id="times">
+ {% for i in range(0,24) %}
+    <p id="time{{ i }}">{{i}}:00</p>
+ {% endfor %}   
+
+</div>
+<!--all the events will be displayed on the screen here -->
+<div class="eventContainer">
+    {% for out in output %}
+
+     <p id='idof{{ out["id"] }}'>{{ out['name'] }} </p>
+    {% endfor %}
+</div>
+<div class="eventContainer">
+ {% for out in outputAdd1 %}
+
+     <p id='idof1{{ out["id"] }}'>{{ out['name'] }} </p>
+    {% endfor %}
+</div>
+<div class="eventContainer">
+ {% for out in outputAdd2 %}
+
+     <p id='idof2{{ out["id"] }}'>{{ out['name'] }} </p>
+    {% endfor %}
+</div>
+<div class="eventContainer">
+ {% for out in outputAdd3 %}
+
+     <p id='idof3{{ out["id"] }}'>{{ out['name'] }} </p>
+    {% endfor %}
+</div>
+<div class="eventContainer">
+ {% for out in outputAdd4 %}
+
+     <p id='idof4{{ out["id"] }}'>{{ out['name'] }} </p>
+    {% endfor %}
+</div>
+<div class="eventContainer">
+ {% for out in outputAdd5 %}
+
+     <p id='idof5{{ out["id"] }}'>{{ out['name'] }} </p>
+    {% endfor %}
+</div>
+<div class="eventContainer">
+ {% for out in outputAdd6 %}
+
+     <p id='idof6{{ out["id"] }}'>{{ out['name'] }} </p>
+    {% endfor %}
+</div>
+<!-- end of events -->
+</main>
+<style>
+
+main{
+    display: flex;
+    flex-direction: row;
+    /*align-items: stretch;*/
+}
+#times{
+	position: relative;
+}
+#time0{
+	margin:0px;
+}
+{% for hour in range(1,24) %}
+#time{{ hour }} {
+    position: absolute;
+    /*margin-top: {{ ((60*hour)/1440)*100 }}%;*/
+    /*margin-top: {{ 40 }}px;
+    content:10px;
+    margin-bottom: 0px;*/
+    margin-top: {{ (60*hour)-18.4 }}px;
+
+
+}
+{% endfor %}
+.eventContainer{
+	position:relative;
+	width:50px;
+	height: 1440px;
+    background-color: red;
+}
+div {background-color: green;}
+{% for out in output %}
+#idof{{ out['id'] }} {
+display: block;
+position: absolute;
+background-color: yellow;
+margin-left: 5%;
+margin-top:{{ out['startTime'] }}px; 
+margin-bottom:0px;
+height:{{ (out['endTime']-out['startTime']) }}px;
+}
+    {% endfor %}
+
+{% for out in outputAdd1 %}
+#idof1{{ out['id'] }} {
+display: block;
+position: absolute;
+background-color: yellow;
+margin-left: 10%;
+margin-top:{{ out['startTime'] }}px; 
+margin-bottom:0px;
+height:{{ (out['endTime']-out['startTime']) }}px;
+}
+    {% endfor %}
+
+{% for out in outputAdd2 %}
+#idof2{{ out['id'] }} {
+display: block;
+position: absolute;
+background-color: yellow;
+margin-left: 15%;
+margin-top:{{ out['startTime'] }}px; 
+margin-bottom:0px;
+height:{{ (out['endTime']-out['startTime']) }}px;
+}
+    {% endfor %}
+
+{% for out in outputAdd3 %}
+#idof3{{ out['id'] }} {
+display: block;
+position: absolute;
+background-color: yellow;
+margin-left: 20%;
+margin-top:{{ out['startTime'] }}px; 
+margin-bottom:0px;
+height:{{ (out['endTime']-out['startTime']) }}px;
+}
+    {% endfor %}
+
+{% for out in outputAdd4 %}
+#idof4{{ out['id'] }} {
+display: block;
+position: absolute;
+background-color: yellow;
+margin-left: 25%;
+margin-top:{{ out['startTime'] }}px; 
+margin-bottom:0px;
+height:{{ (out['endTime']-out['startTime']) }}px;
+}
+    {% endfor %}
+
+{% for out in outputAdd5 %}
+#idof5{{ out['id'] }} {
+display: block;
+position: absolute;
+background-color: yellow;
+margin-left: 30%;
+margin-top:{{ out['startTime'] }}px; 
+margin-bottom:0px;
+height:{{ (out['endTime']-out['startTime']) }}px;
+}
+    {% endfor %}
+
+{% for out in outputAdd6 %}
+#idof6{{ out['id'] }} {
+display: block;
+position: absolute;
+background-color: yellow;
+margin-left: 35%;
+margin-top:{{ out['startTime'] }}px; 
+margin-bottom:0px;
+height:{{ (out['endTime']-out['startTime']) }}px;
+}
+    {% endfor %}
+
+
+
+</style>
+{% endblock %}
