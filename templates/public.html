@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.searchbar() }}
+    {{ form.submit() }}
+</form>
+{% for event in public_events %}
+<a href="{{ url_for('public_event',event_id=event['publicId']) }}">{{ event['name']}}</a>
+<p>start: {{ event['startTime']//60 }} : {{ event['startTime']%60 }}</p>
+<p>end: {{ event['endTime']//60 }} : {{ event['endTime']%60 }}</p>
+{% endfor %}
+{% endblock %}

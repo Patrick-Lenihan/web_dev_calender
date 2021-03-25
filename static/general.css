@@ -1,0 +1,7 @@
+nav{
+	background-color:#35abe6;
+	padding:5px;
+}
+nav>a:nth-child(6){
+	float:right;
+}

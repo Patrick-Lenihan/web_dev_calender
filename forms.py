@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField ,HiddenField, PasswordField
+from wtforms import StringField, SubmitField ,HiddenField, PasswordField, RadioField
 from wtforms.validators import InputRequired
 
 class CalenderInsertForm(FlaskForm):
@@ -7,6 +7,18 @@ class CalenderInsertForm(FlaskForm):
     eventStart = StringField("start",validators=[InputRequired(message="you must enter somthing here")]) 
     eventEnd = StringField("end",validators=[InputRequired(message="you must enter somthing here")]) 
     date = StringField("date",validators=[InputRequired(message="you must enter somthing here")]) 
+    reacuring = RadioField("does this event reacuring",
+    						choices=[("No","No"),
+    								("Daily","Daily"),
+    								("Weekly","Weekly"),
+    								("Yearly","Yearly")],
+    								default="No"
+    	)
+    isPublic = RadioField("do you whant to make this a public event viewable to other users",
+    	choices=[("No","No"),
+    			("Public","Public")],
+    			default="No"
+    			)
     submit = SubmitField("Submit")
 
 class HiddenFormForTodaysDate(FlaskForm):
@@ -22,4 +34,19 @@ class signUpForm(FlaskForm):
 class loginForm(FlaskForm):
 	username = StringField("user name",validators=[InputRequired(message="you must enter somthing here")])
 	password = PasswordField("password",validators=[InputRequired(message="you must enter somthing here")])
+	submit = SubmitField("Submit")
+
+class goToPublicEvent(FlaskForm):
+	submit = SubmitField("Go to event")
+
+class searchPublicEvents(FlaskForm):
+	searchbar = StringField("user name",validators=[InputRequired(message="you must enter somthing here")])
+	submit = SubmitField('search')
+
+class sendMatchingRequest(FlaskForm):
+	startDate = StringField('date to start search',validators=[InputRequired(message="you must enter somthing here")])
+	endDate = StringField('date to end search',validators=[InputRequired(message="you must enter somthing here")])
+	startTime = StringField('earliest you can meet on each day',validators=[InputRequired(message="you must enter somthing here")])
+	endTime = StringField('Latest you can meet on each day',validators=[InputRequired(message="you must enter somthing here")])
+	people = StringField('list the people you want to match you schedual with seperated by a comma',validators=[InputRequired(message="you must enter somthing here")])
 	submit = SubmitField("Submit")

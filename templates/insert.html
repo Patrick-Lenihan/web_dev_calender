@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block main_content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='user_auth.css') }}">
 <form action="" method="POST" novalidate>
     {{ form.hidden_tag() }}
     {{ form.eventName.label }}
@@ -15,7 +16,12 @@
     {{ form.date.label }}
     {{ form.date() }}
     <br>
-
+    {{ form.reacuring.label }}
+    {{ form.reacuring() }}
+    <br>
+    {{ form.isPublic.label }}
+    {{ form.isPublic() }}
+    <br>
     {{ form.submit.label }}
     {{ form.submit() }}
 </form>

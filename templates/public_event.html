@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+{% for event in event_info %}
+<p>{{ event['name'] }}</p>
+{% endfor %}
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.submit() }}
+</form>
+<h3>people attending this event: </h3>
+{% for people in people_attending %}
+<p>{{ people['user_name'] }}</p>
+{% endfor %}
+<!--https://jinja.palletsprojects.com/en/2.11.x/templates/#length-->
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+
+<table>
+	{% for event in events %}
+	<tr>
+		{% for datum in event %}
+		<td>{{ datum }}</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+
+<table>
+	{% for user in users %}
+	<tr>
+		<td>{{ user['user_name'] }}</td>
+		<td>{{ user['name'] }}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+{% endblock %}
