@@ -69,7 +69,7 @@ def returnDBOnDate(day,username,eventDate,offset):
 
 def find_day(javascript_date):
     javascript_date = javascript_date.split(" ")
-    dates_to_nums = {'Mon':0,'Tue':1,'Wed':2,'Thr':3,'Fri':4,'Sat':5,'Sun':6}
+    dates_to_nums = {'Mon':0,'Tue':1,'Wed':2,'Thu':3,'Fri':4,'Sat':5,'Sun':6}
     return dates_to_nums[javascript_date[0]]
 
 def choose_day_in_weekly_data(reacuring,event_date):

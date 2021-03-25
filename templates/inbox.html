@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+{% for request in matching_requests_received %}
+	<p>{{ request['user'] }}</p>
+	<form action="" method="POST" novalidate>
+		{{ form.hidden_tag() }}
+		<!--found out how to pass values into wtforms using jinja2 templates on stack overflow -->
+		{{ form.accepted(value= request['id'] ) }} 
+		<!-- https://stackoverflow.com/questions/19645028/passing-a-value-to-wtforms-field-with-jinja2/19645147-->
+		{{ form.submit() }}
+	</form>
+{% endfor %}
+{% for data in data_ready_for_matching%}
+<p>{{ data }} ready to be matched <p>
+{% for i in times_free %}
+	{% if i[0] == data %}
+		<p>{{ i }} <p>
+	{% endif %}
+{% endfor %}
+{% endfor %}
+{% endblock %}

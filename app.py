@@ -1,10 +1,10 @@
 from flask import Flask, render_template, redirect, url_for,g,request
-from forms import CalenderInsertForm,HiddenFormForTodaysDate, signUpForm, loginForm, goToPublicEvent, searchPublicEvents,sendMatchingRequest
+from forms import CalenderInsertForm,HiddenFormForTodaysDate, signUpForm, loginForm, goToPublicEvent, searchPublicEvents,sendMatchingRequest, HiddenFormForAcceptingMatching
 from database import get_db, close_db
 from functions_for_calender_page import insert_event_into_db, convert_from_string_time_to_int_format, returnDB, convert_javascript_date_to_SQL_format, returnDBOnDate,time_until_client_date_change, find_day, choose_day_in_weekly_data
 from functions_for_user_val import insert_user_into_db, check_if_username_exists
 from functions_for_public_events import return_public_events, get_event, list_of_attendees, attend_public_event, user_has_not_already_attended_event, search_public_events
-from functions_for_matching import create_table_for_storing_matching_users
+from functions_for_matching import store_info_about_matching,  send_matching_request, get_matching_inbox, accept_matching, return_aproved_for_matching, match_schedual, generate_matched_data_times, format_times_in_string
 from time import time
 from flask import session
 from flask_session import Session 
@@ -173,6 +173,22 @@ def public_event(event_id):
 def match():
     form = sendMatchingRequest()
     if form.validate_on_submit():
-        table_lookup_name = create_table_for_storing_matching_users(g.user,form.startDate.data,form.endDate.data,form.startTime.data,form.endTime.data,form.people.data)
+        table_id_num = store_info_about_matching(g.user,form.startDate.data,form.endDate.data,convert_from_string_time_to_int_format(form.startTime.data),convert_from_string_time_to_int_format(form.endTime.data))
+        print(table_id_num)
+        print(type(table_id_num))
+        send_matching_request(table_id_num,form.people.data)
         return render_template("match.html",form=form)
     return render_template("match.html",form=form)
+
+@app.route("/inbox", methods=["GET","POST"])
+@login_required
+def inbox():
+    form = HiddenFormForAcceptingMatching()
+    if form.validate_on_submit():
+        accept_matching(form.accepted.data,g.user)
+    matching_requests_received = get_matching_inbox(g.user)
+    data_ready_for_matching = return_aproved_for_matching(g.user)
+    matched_data = match_schedual(g.user,data_ready_for_matching)
+    times_free = generate_matched_data_times(matched_data)
+    times_free = format_times_in_string(times_free)
+    return render_template("inbox.html",matching_requests_received=matching_requests_received,form=form,data_ready_for_matching=data_ready_for_matching,times_free=times_free)

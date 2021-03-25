@@ -12,4 +12,6 @@ CREATE TABLE users
 );
 INSERT INTO users (user_name,name,password)
 VALUES ('paddy','pad','power');*/
-SELECT * from aMatchTable;
+SELECT * from matchingRequests;
+SELECT * from matchingResponse;
+SELECT * FROM events;

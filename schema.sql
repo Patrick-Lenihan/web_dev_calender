@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS publicEvents;
+/*DROP TABLE IF EXISTS publicEvents;
 
 CREATE TABLE publicEvents 
 (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     last_edit TEXT
-    );
+    );*/
     /*
 DROP TABLE IF EXISTS events;
 
@@ -31,3 +31,25 @@ CREATE TABLE users
 );
 INSERT INTO users (user_name,name,password)
 VALUES ('paddy','pad','power');*/
+DROP TABLE IF EXISTS matchingRequests;
+
+CREATE TABLE matchingRequests 
+(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user TEXT NOT NULL,
+	startDate TEXT NOT NULL,
+	endDate TEXT NOT NULL,
+	startTime TEXT NOT NULL,
+	endTime TEXT NOT NULL,
+    last_edit TEXT DEFAULT '0'
+    );
+
+DROP TABLE IF EXISTS matchingResponse;
+
+CREATE TABLE matchingResponse 
+(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_name TEXT NOT NULL,
+    for_id INTEGER NOT NULL,
+    accepted TEXT NOT NULL 
+    );

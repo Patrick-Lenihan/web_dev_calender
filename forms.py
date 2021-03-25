@@ -50,3 +50,7 @@ class sendMatchingRequest(FlaskForm):
 	endTime = StringField('Latest you can meet on each day',validators=[InputRequired(message="you must enter somthing here")])
 	people = StringField('list the people you want to match you schedual with seperated by a comma',validators=[InputRequired(message="you must enter somthing here")])
 	submit = SubmitField("Submit")
+
+class HiddenFormForAcceptingMatching(FlaskForm):
+	accepted = StringField()# found method from https://wtforms.readthedocs.io/en/2.3.x/fields/ 
+	submit = SubmitField("accept")
