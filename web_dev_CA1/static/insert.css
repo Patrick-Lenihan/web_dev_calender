@@ -1,0 +1,10 @@
+form{
+	position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-color: blue;
+  border-width: 3px;
+  padding:20px;
+}

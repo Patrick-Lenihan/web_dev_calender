@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
+
+<table>
+	<tr>
+		<th>id</th>
+		<th>reacuring</th>
+		<th>user_name</th>
+		<th>name</th>
+		<th>startTime</th>
+		<th>endTime	</th>
+		<th>eventDate</th>
+		<th>publicId</th>
+	</tr>					
+
+	{% for event in events %}
+	<tr>
+		{% for datum in event %}
+		<td>{{ datum }}</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+
+<table>
+	<tr>
+		<th> name </th>
+		<th> user_name </th>
+	</tr>
+	{% for user in users %}
+	<tr>
+		<td>{{ user['user_name'] }}</td>
+		<td>{{ user['name'] }}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+<table>
+	<tr>
+		<th>id</th>
+		<th>user_name</th>
+		<th>for_id</th>
+		<th>accepted</th>
+	</tr>			
+	{% for response in matchingResponse %}
+	<tr>
+		{% for datum in response %}
+		<td>{{ datum }}</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+<table>
+	<tr>
+		<th>id</th>
+		<th>user</th>
+		<th>startDate</th>
+		<th>endDate</th>
+		<th>last_edit</th>
+	</tr>
+					
+	{% for request in matchingRequests %}
+	<tr>
+		{% for datum in request %}
+		<td>{{ datum }}</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+
+
+{% endblock %}

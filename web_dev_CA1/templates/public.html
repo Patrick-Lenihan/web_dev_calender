@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<form class="go_slight_left" action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.searchbar() }}
+    {{ form.submit() }}
+</form>
+{% for event in public_events %}
+<section>
+<a href="{{ url_for('public_event',event_id=event['publicId']) }}" class='go_left'>{{ event['name']}}</a>
+<p class="go_left">start: {{ event['startTime']//60 }} : {{ event['startTime']%60 }}</p>
+<p class="go_left">end: {{ event['endTime']//60 }} : {{ event['endTime']%60 }}</p>
+</section>
+{% endfor %}
+{% endblock %}

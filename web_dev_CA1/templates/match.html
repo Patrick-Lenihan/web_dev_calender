@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='user_auth.css') }}">
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+     {{ form.startDate.label }}
+     {{ form.startDate() }}
+     {% for error in form.startDate.errors %}
+        {{ error }}
+    {% endfor %}
+     <br>
+     {{ form.endDate.label }}
+     {{ form.endDate() }}
+     {% for error in form.endDate.errors %}
+        {{ error }}
+    {% endfor %}
+     <br>
+     {{ form.people.label }}
+     {{ form.people()}}
+     {% for error in form.people.errors %}
+        {{ error }}
+    {% endfor %}
+     <br>
+    {{ form.submit() }}
+</form>
+
+{% endblock %}

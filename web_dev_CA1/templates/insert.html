@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='insert.css') }}">
+<form action="" method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <p>enter the event name </p>
+    {{ form.eventName.label }}
+    {{ form.eventName() }}
+    {% for error in form.eventName.errors %}
+        {{ error }}
+    {% endfor %}
+    <br>
+    <p>enter the time the event starts in the form HH:MM </p>
+    {{ form.eventStart.label }}
+    {{ form.eventStart() }}
+    {% for error in form.eventStart.errors %}
+        {{ error }}
+    {% endfor %}
+    <br>
+    <p>enter the time the event ends in the form HH:MM </p>
+    {{ form.eventEnd.label }}
+    {{ form.eventEnd() }}
+    {% for error in form.eventEnd.errors %}
+        {{ error }}
+    {% endfor %}
+    <br>
+    <p>enter the date of the event in the form YYYY-MM-DD </p>
+    {{ form.date.label }}
+    {{ form.date() }}
+    {% for error in form.date.errors %}
+        {{ error }}
+    {% endfor %}
+    <br>
+    {{ form.reacuring.label }}
+    {{ form.reacuring() }}
+    <br>
+    {{ form.isPublic.label }}
+    {{ form.isPublic() }}
+    <br>
+    {{ form.submit.label }}
+    {{ form.submit() }}
+</form>
+
+{% endblock %}

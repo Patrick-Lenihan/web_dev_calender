@@ -1,0 +1,46 @@
+:root{
+	background-color:#cafafe ;
+}
+h1{
+	color:#97caef
+}
+nav{
+	background-color:#55bcc9;
+	padding:15px;
+}
+nav>a:nth-child(9){
+	float:right;
+}
+nav>a{
+	background-color: #3feee6;
+	color: #fc4445;
+	margin-right: 2%;
+	padding: 5px;
+}
+#user_name{
+	color:black;
+	display:inline;
+	background-color: #fc4445;
+	margin-right: 2%;
+	padding: 5px;
+}
+section{
+	background-color: #3feee6;
+}
+.go_left{
+	margin-left:50%;
+}
+.go_slight_left{
+	margin-left: 45%;
+}
+section>p{
+	margin-left: 45%;
+}
+.hidden_class{
+	width:0px;
+	height: 0px;
+	visibility: hidden;
+}
+.formClass>#submit{
+	margin-left: 42%;
+}
