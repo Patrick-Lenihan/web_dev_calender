@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='user_auth.css') }}">
 <form action="" method="POST" novalidate>
     {{ form.hidden_tag() }}
+    <p> input the dates you what to schedual an event on and the people you want to do it with</p>
      {{ form.startDate.label }}
      {{ form.startDate() }}
      {% for error in form.startDate.errors %}

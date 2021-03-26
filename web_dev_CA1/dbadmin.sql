@@ -16,3 +16,4 @@ SELECT * from matchingRequests;
 SELECT * from matchingResponse;
 SELECT * FROM events;
 SELECT * FROM users;
+select * from publicEvents;

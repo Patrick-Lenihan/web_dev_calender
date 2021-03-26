@@ -16,6 +16,12 @@ app.config["SECRET_KEY"]="this-is-my-secret-key"
 app.config["SESSION_PERMANENT"] = False 
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+# user accounts: r password:r k(same password) a(same password)
+# to get to admin page go to /admin and enter the username: admin and password: admin
+#key features of wesite
+# 1. a calender that shows you the evensts you have this week
+# 2. a public events system where you can join the events that other users takeing part in 
+# 3. a schedual matching system which finds a time for people to meet
 
 @app.before_request
 def load_logged_in_user():
@@ -52,6 +58,9 @@ def index():
 @app.route("/calender", methods=["GET","POST"])
 @login_required
 def calender():
+    '''
+    function for the calender page, gets the date in the clients timezone and returns the schedual for the next seven days
+    '''
     unix_time = (int(time()))//60 
     hiddenForm = HiddenFormForTodaysDate()
     output = ""
@@ -59,6 +68,7 @@ def calender():
     date_needed = 'True'
     if hiddenForm.validate_on_submit():
         if ("client_date" not in session) or (session['time_until_change'] < (unix_time-session['server_date'])):
+            #dealing with the chage of days
             session["time_until_change"] = time_until_client_date_change(hiddenForm.todaysDate.data)
             session["client_date"]= convert_javascript_date_to_SQL_format(hiddenForm.todaysDate.data)
             session["server_date"] = unix_time #recording the time in hours since 1 Jan 1970 for
@@ -83,6 +93,7 @@ def calender():
 def insert():
     '''
     this is a function that is the backend of the insersion webpage
+    it is responsable for the validation of the data and then inserts it into the database
     '''
     form = CalenderInsertForm()
     #output = returnDB()
@@ -123,6 +134,10 @@ def insert():
 
 @app.route("/signup", methods=["GET","POST"])
 def signup():
+    '''
+    main function for the signup form 
+    must check if username already exists before letting the username through
+    '''
     form = signUpForm()
     if form.validate_on_submit() and check_if_username_exists(form.username.data):
         insert_user_into_db(form.username.data,form.name.data,form.password.data)
@@ -133,6 +148,11 @@ def signup():
 
 @app.route("/login", methods=["GET","POST"])
 def login():
+    '''
+    main function for the login form
+    users login and have there username an passwords checked
+    if they are sucessful the  username in the session gets changed
+    '''
     form = loginForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -151,7 +171,6 @@ def login():
             if not next_page:
                 next_page = url_for("calender")
             return redirect(next_page)
-            #return redirect(url_for("calender"))
     return render_template("login.html",form=form)
 
 
@@ -163,6 +182,9 @@ def logout():
 @app.route("/admin", methods=["GET","POST"])
 @admin_required
 def admin():
+    '''
+    admin provides a veiw of all the tables in the database
+    '''
     events = returnDB('events')
     users = returnDB('users')
     matchingRequests = returnDB('matchingRequests')
@@ -172,6 +194,10 @@ def admin():
 @app.route("/public", methods=["GET","POST"])
 @login_required
 def public():
+    '''
+    public is a place where you can find public events that are happening
+    you can find them by just scrolling or you can search for one
+    '''
     form =  searchPublicEvents()
     if form.validate_on_submit():
         public_events = search_public_events(form.searchbar.data)
@@ -182,6 +208,10 @@ def public():
 @app.route("/public_event/<int:event_id>", methods=["GET","POST"])
 @login_required
 def public_event(event_id):
+    '''
+    provides info about a specified public event
+    it also alows the user to join the event if the press a submit button
+    '''
     form = goToPublicEvent()
     event_info = get_event(event_id)
     people_attending = list_of_attendees(event_id)
@@ -197,6 +227,9 @@ def public_event(event_id):
 @app.route("/match", methods=["GET","POST"])
 @login_required
 def match():
+    '''
+    match allows you to send out requests to users you know in order to find out when you are all free 
+    '''
     form = sendMatchingRequest()
     if form.validate_on_submit():
         if validate_date(form.startDate.data) == True:
@@ -218,6 +251,11 @@ def match():
 @app.route("/inbox", methods=["GET","POST"])
 @login_required
 def inbox():
+    '''
+    provides info on if you have gotten any requests for schedual matching 
+    it allows you to accept the request by clicking a button
+    it also shows you the results when the users you have sent the requests to have agreed to it
+    '''
     form = HiddenFormForAcceptingMatching()
     if form.validate_on_submit():
         accept_matching(form.accepted.data,g.user)

@@ -7,7 +7,7 @@ class CalenderInsertForm(FlaskForm):
     eventStart = StringField("start",validators=[InputRequired(message="you must enter somthing here")]) 
     eventEnd = StringField("end",validators=[InputRequired(message="you must enter somthing here")]) 
     date = StringField("date",validators=[InputRequired(message="you must enter somthing here")]) 
-    reacuring = RadioField("does this event reacuring",
+    reacuring = RadioField("does this event reoccur",
     						choices=[("No","No"),
     								("Daily","Daily"),
     								("Weekly","Weekly"),
@@ -46,8 +46,6 @@ class searchPublicEvents(FlaskForm):
 class sendMatchingRequest(FlaskForm):
 	startDate = StringField('date to start search',validators=[InputRequired(message="you must enter somthing here")])
 	endDate = StringField('date to end search',validators=[InputRequired(message="you must enter somthing here")])
-	#startTime = StringField('earliest you can meet on each day',validators=[InputRequired(message="you must enter somthing here")])
-	#endTime = StringField('Latest you can meet on each day',validators=[InputRequired(message="you must enter somthing here")])
 	people = StringField('list the people you want to match you schedual with seperated by a comma',validators=[InputRequired(message="you must enter somthing here")])
 	submit = SubmitField("Submit")
 

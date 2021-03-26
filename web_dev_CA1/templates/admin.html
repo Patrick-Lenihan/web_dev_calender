@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='admin.css') }}">
 
 <table>
+	<caption> events</caption>
 	<tr>
 		<th>id</th>
 		<th>reacuring</th>
@@ -25,6 +26,7 @@
 </table>
 
 <table>
+	<caption> users</caption>
 	<tr>
 		<th> name </th>
 		<th> user_name </th>
@@ -38,6 +40,7 @@
 </table>
 
 <table>
+	<caption> matchingResponse</caption>
 	<tr>
 		<th>id</th>
 		<th>user_name</th>
@@ -53,6 +56,7 @@
 	{% endfor %}
 </table>
 <table>
+	<caption> matchingRequests</caption>
 	<tr>
 		<th>id</th>
 		<th>user</th>

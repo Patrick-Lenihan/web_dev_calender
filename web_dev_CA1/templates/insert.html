@@ -3,6 +3,7 @@
 {% block main_content %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='insert.css') }}">
 <form action="" method="POST" novalidate>
+    <p> this is how you schedual events in your calender</p>
     {{ form.hidden_tag() }}
     <p>enter the event name </p>
     {{ form.eventName.label }}

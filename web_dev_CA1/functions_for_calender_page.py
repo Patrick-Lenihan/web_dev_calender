@@ -68,11 +68,17 @@ def returnDBOnDate(day,username,eventDate,offset):
     return db.execute("""SELECT * FROM events WHERE ((eventDate = date(?,?))or (reacuring = 'Daily')or (reacuring=?)or(reacuring=? ))AND user_name = ? ORDER BY startTime;""",(eventDate,offset_string,day,half_date,username)).fetchall()
 
 def find_day(javascript_date):
+    '''
+    this function takes in a javascript date and turrns it into a numeric value to be used in place of a day
+    '''
     javascript_date = javascript_date.split(" ")
     dates_to_nums = {'Mon':0,'Tue':1,'Wed':2,'Thu':3,'Fri':4,'Sat':5,'Sun':6}
     return dates_to_nums[javascript_date[0]]
 
 def choose_day_in_weekly_data(reacuring,event_date):
+    '''
+    gets of the week from a date
+    '''
     if reacuring == "Weekly":
         # fucntions found at https://docs.python.org/3/library/datetime.html
         event_date = date.fromisoformat(event_date)

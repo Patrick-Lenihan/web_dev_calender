@@ -2,6 +2,10 @@ from database import get_db, close_db
 from datetime import date
 from datetime import datetime,timedelta
 def store_info_about_matching(user,start_date,end_date):
+	'''
+	stores the info entered in the form in matchingRequests
+	outputs the id of this insert statemnt to be used as a forregn key later
+	'''
 	db = get_db()
 	db.execute("""INSERT INTO matchingRequests (user,startDate,endDate,last_edit) VALUES(?,?,?,?);""",(user,start_date,end_date,'1'))
 	output = db.execute(""" SELECT id FROM matchingRequests WHERE last_edit = '1' """).fetchone()
@@ -10,23 +14,31 @@ def store_info_about_matching(user,start_date,end_date):
 	return output[0]
 
 def send_matching_request(for_id,people):
- 	db = get_db()
- 	people = people.split(",")
- 	for person in people:
- 		db.execute("""INSERT INTO matchingResponse (user_name,for_id,accepted) VALUES (?,?,?);""",(person,for_id,'0'))
-
- 	db.commit()
+	'''
+	stores all the users that who need to give there permision to match scheduals
+	'''
+	db = get_db()
+	people = people.split(",")
+	for person in people:
+		db.execute("""INSERT INTO matchingResponse (user_name,for_id,accepted) VALUES (?,?,?);""",(person,for_id,'0'))
+	db.commit()
 
 def get_matching_inbox(user):
 	db = get_db()
 	return db.execute(""" SELECT * FROM matchingRequests WHERE id IN (SELECT for_id FROM matchingResponse WHERE (user_name = ?)AND(accepted= "0")); """,(user,))
 
 def accept_matching(event_id, user):
+	'''
+	allows the user to accept the schedual matching
+	'''
 	db = get_db()
 	db.execute(""" UPDATE matchingResponse SET accepted = '1' WHERE ((for_id = ?)AND(user_name = ?));""",(event_id,user))
 	db.commit()
 
 def return_aproved_for_matching(user):
+	'''
+	this funtion returns the rows that all involved have given their permission to match
+	'''
 	db = get_db()
 	list_of_users_requests = db.execute("""SELECT * FROM matchingResponse WHERE (for_id IN (SELECT id FROM matchingRequests WHERE user = ?))""",(user,)).fetchall()
 	unfinished_requests = []
@@ -41,6 +53,9 @@ def return_aproved_for_matching(user):
 	return list(finished_requests)
 
 def match_schedual(user,groups_to_match):
+	'''
+	returns all the minuits where all users involved are free
+	'''
 	db = get_db()
 	output_list = []
 	for group in groups_to_match:
@@ -79,6 +94,9 @@ def match_schedual(user,groups_to_match):
 	return output_list
 
 def generate_matched_data_times(list_of_times):
+	'''
+	takes out unececerry info 
+	'''
 	output_list = []
 	for group in list_of_times:
 		for k in range(1,len(group)):
@@ -100,7 +118,9 @@ def int_to_string_time(int_input):
 	return str(int_input//60)+":"+str(int_input%60)
 
 def format_times_in_string(times):
-	print(times)
+	'''
+	formats the times correctly
+	'''
 	output = []
 	for group in times:
 		temp_list = [group[0]]
@@ -108,7 +128,6 @@ def format_times_in_string(times):
 			if i%2== 1:
 				temp_list.append(int_to_string_time(group[i])+"-"+int_to_string_time(group[i+1]))
 		output.append(temp_list)
-	print(output)
 	return(output)
 
 
